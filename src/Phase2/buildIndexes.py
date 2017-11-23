@@ -17,17 +17,17 @@ def main():
 
 
 def create_indexies():
-    database=db.DB()
-    database.open("re.idx",None,db.DB_HASH,db.DB_CREATE)
-    database.close()
+    database1=db.DB()
+    database1.open("re.idx",None,db.DB_HASH,db.DB_CREATE)
+    database1.close()
 
-    database=db.DB()
-    database.open("te.idx",None,db.DB_BTREE,db.DB_CREATE)
-    database.close()
+    database2=db.DB()
+    database2.open("te.idx",None,db.DB_BTREE,db.DB_CREATE)
+    database2.close()
 
-    database=db.DB()
-    database.open("ye.idx",None,db.DB_BTREE,db.DB_CREATE)
-    database.close()
+    database3=db.DB()
+    database3.open("ye.idx",None,db.DB_BTREE,db.DB_CREATE)
+    database3.close()
 
 def main():
     # sort()
