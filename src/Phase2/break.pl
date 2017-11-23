@@ -1,5 +1,8 @@
 #!/usr/bin/perl
+<<<<<<< HEAD
 
+=======
+>>>>>>> 098a2a25a371424c36f64e7856b4b0586abf1c75
 while (<STDIN>) {
   chomp;
   if (/^(.*?):(.*?)$/) {
@@ -10,4 +13,7 @@ while (<STDIN>) {
     print $key, "\n", $rec, "\n";
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 098a2a25a371424c36f64e7856b4b0586abf1c75
