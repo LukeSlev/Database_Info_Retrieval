@@ -2,8 +2,8 @@ import re
 
 
 def main():
-    records = "(<\w+ key=\")([-\w\//]+)(\">)"
-    regex = re.compile('[^a-zA-Z0-9 ]')
+    records = "(<\w+ key=\")([-\w\//]+)(\">)"  # Looks for the records key
+    regex = re.compile('[^a-zA-Z0-9_ ]')  # valid characters in the text
 
     with open("long-test.txt", "r") as inp, open("terms.txt", "w") as terms, open("years.txt", "w") as years, \
             open("recs.txt", "w") as recs:
@@ -41,8 +41,8 @@ def main():
 
 
 
-            print(l)
-            print(line)
+            #print(l)
+            #print(line)
 
 
 
