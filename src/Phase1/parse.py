@@ -1,12 +1,18 @@
-import bsddb3
-import re
+import bsddb3, sys, re
 
+def input():
+    fName = sys.argv[1]
+    if fName is None:
+        return -1
+    else:
+        return fName
 
 def main():
     records = "(<\w+ key=\")([-\w\//]+)(\">)"  # Looks for the records key
     regex = re.compile('[^a-zA-Z0-9_ ]')  # valid characters in the text
 
-    with open("long-test.txt", "r") as inp, open("terms.txt", "w") as terms, open("years.txt", "w") as years, \
+    fName = input()
+    with open(fName, "r") as inp, open("terms.txt", "w") as terms, open("years.txt", "w") as years, \
             open("recs.txt", "w") as recs:
         for line in inp:
 

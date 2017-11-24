@@ -32,7 +32,7 @@ def loadDB(typ, inp, db):
 def checkDB(inp):
     call('db_dump -p {0} -f test.txt '.format(inp), shell=True)
 
-def indexes():
+def load_indexes():
     # inputs
     t = "termsOut.txt"
     y = "yearsOut.txt"
@@ -51,25 +51,29 @@ def main():
 
 
 
-def create_indexies():
+def create_indexes():
     database1=db.DB()
+    database1.set_flags(db.DB_DUP)
     database1.open("re.idx",None,db.DB_HASH,db.DB_CREATE)
     database1.close()
 
     database2=db.DB()
+    database2.set_flags(db.DB_DUP)
     database2.open("te.idx",None,db.DB_BTREE,db.DB_CREATE)
     database2.close()
 
     database3=db.DB()
+    database3.set_flags(db.DB_DUP)
     database3.open("ye.idx",None,db.DB_BTREE,db.DB_CREATE)
     database3.close()
 
 def main():
     sortFiles()
-    create_indexies()
+    create_indexes()
     readyDBInp()
-    indexes()
-    #checkDB("re.idx")
+    # This works however make sure you delete the index files before trying this
+    load_indexes()
+    # checkDB("te.idx")
 
 
 if __name__ == '__main__':

@@ -3,8 +3,12 @@ import re
 
 def main():
     d = set()
-    with open("recsOut.txt", "r") as ans, open("test.txt", "r") as terms:
-        print(set(ans.read()) - set(terms.read()))
+    with open("recsOut.txt", "r") as ans, open("t.txt", "r") as terms:
+        for line in terms:
+            d.add(line)
+        for lines in ans:
+            if lines not in d:
+                print(lines)
 
 
 
