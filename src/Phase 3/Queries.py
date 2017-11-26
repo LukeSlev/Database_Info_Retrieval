@@ -7,6 +7,7 @@ SHORT, FULL = range(2)
 displayMode = SHORT
 
 def parseQuery(query):
+    global displayMode
     numeric="[0-9]"
     alphanumeric="[0-9a-zA-Z]"
 
@@ -70,12 +71,12 @@ def parseYearSearch(exp):
     global returnSet
     for m in re.finditer("<", exp):
         ret = yearsLess(exp[m.start()+1:])
-        print(ret)
+        #print(ret)
         joinQueries(ret)
         return
     for m in re.finditer(">", exp):
         ret = yearsGreater(exp[m.start()+1:])
-        print(ret)
+        #print(ret)
         joinQueries(ret)
         return
 
@@ -174,8 +175,9 @@ def displayResults():
 
     for r in returnSet:
         result = curs.set(r.encode('utf-8'))
-        if displayMode is FULL:
+        if displayMode == FULL:
             print(str(result[1].decode('utf-8')))
+
         else:
             print(str(result[0].decode('utf-8')))
 
