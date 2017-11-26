@@ -1,11 +1,17 @@
 import bsddb3, sys, re
-import termSearch
+import termSearch, yearRangeSearch
 
 def parseQuery(query):
     if re.search("^[a]$",query):
         print("here")
 
-def yearsInRange():
+def yearsInRange(starting_year, ending_year):
+    return yearSearch(starting_year, ending_year)
+
+def yearsGreater(starting_year):
+    pass
+
+def yearsLess(ending_year):
     pass
 
 def titeEqualTo(title):
