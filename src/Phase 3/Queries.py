@@ -1,4 +1,6 @@
-import bsddb3,sys,re
+import bsddb3, sys, re
+import termSearch
+import yearInBetween, yearGreater, yearLess
 
 def parseQuery(query):
     numeric="[0-9]"
@@ -57,23 +59,23 @@ def parseQuery(exp):
 def parsePhrase(exp):
 	pass
 
-def yearGreaterThan(year):
-    pass
+def yearsInRange(starting_year, ending_year):
+    return yearinBetween.yearSearch(starting_year, ending_year)
 
-def yearLessThan(year):
-    pass
+def yearsGreater(starting_year):
+    return yearGreater.yearSearch(starting_year)
 
-def yearEqualTo(year):
-    pass
+def yearsLess(ending_year):
+    return yearLess.yearSearch(ending_year)
 
 def titeEqualTo(title):
-    pass
+    return termSearch.termSearch('t-' + title)
 
 def authorEqualTo(author):
-    pass
+    return termSearch.termSearch('a-' + title)
 
 def otherEqualTo(other):
-    pass
+    return termSearch.termSearch('o-' + title)
 
 def joinQueries():
     pass
