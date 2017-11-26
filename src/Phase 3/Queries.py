@@ -38,7 +38,7 @@ def parseQuery(query):
                 return
 					
             if re.match(termQuery,exp):
-                parseQuerySearch(exp)
+                parseTermSearch(exp)
                 return
 					
             if re.match(termQuery,exp):
@@ -54,8 +54,12 @@ def parseQuery(query):
 def parseYearSearch(exp):
 	for m in re.finditer("<", exp):
 		yearsLess(exp[m.start()+1:])
+		return
+   for m in re.finditer(">", exp):
+      yearsGreater(exp[m.start()+1:])
+      return
 
-def parseQuerySearch(exp):
+def parseTermSearch(exp):
 	pass
 
 def parsePhraseSearch(exp):
