@@ -80,6 +80,12 @@ def parseYearSearch(exp):
         joinQueries(ret)
         return
 
+    for m in re.finditer(":", exp):
+        ret = yearsEqualTo(exp[m.start()+1:])
+        #print(ret)
+        joinQueries(ret)
+        return
+
 def parseTermSearch(exp):
     for m in re.finditer("title:", exp):
         joinQueries(titleEqualTo(exp[m.start()+6:]))
@@ -102,6 +108,10 @@ def yearsGreater(starting_year):
 def yearsLess(ending_year):
     print("years less: ",ending_year)
     return yearLess.yearSearch(ending_year)
+
+def yearsEqualTo(year):
+    print("year equal to: ",year)
+    return set()
 
 def titleEqualTo(title):
     print("title: ",title)
@@ -162,7 +172,7 @@ def joinQueries(resultToAdd):
     if len(returnSet) == 0:
         returnSet = resultToAdd
     else:
-        returnSet.intersection(resultToAdd)
+        returnSet=returnSet.intersection(resultToAdd)
 
 def displayResults():
     global returnSet
@@ -188,7 +198,7 @@ def displayResults():
 def main():
     global returnSet
     for line in sys.stdin:
-        parseQuery(line)
+        parseQuery(line.lower())
         displayResults()
         returnSet=set()
 

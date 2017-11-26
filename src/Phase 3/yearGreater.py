@@ -13,7 +13,7 @@ def yearSearch(Starting_Year):
 
     middleSet = set()
 
-    print(str(int(Starting_Year)+1))
+    # print(str(int(Starting_Year)+1))
 
     if (int(Starting_Year) < int(curs.first()[0].decode("utf-8"))): # too early
         result = curs.set_range(curs.first()[0])
@@ -22,7 +22,7 @@ def yearSearch(Starting_Year):
     else:
         result = None  # too late
 
-    print("LUKE: ",result)
+    # print("LUKE: ",result)
     if(result != None):
         while(result != None):
             #print(result[1].decode('utf-8'))
