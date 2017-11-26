@@ -1,6 +1,6 @@
 import bsddb3, sys, re
 import termSearch
-import yearGreater, yearLess
+import yearGreater, yearLess, yearEqual
 
 returnSet = set()
 SHORT, FULL = range(2)
@@ -111,7 +111,7 @@ def yearsLess(ending_year):
 
 def yearsEqualTo(year):
     print("year equal to: ",year)
-    return set()
+    return yearEqual.yearSearch(year)
 
 def titleEqualTo(title):
     print("title: ",title)
