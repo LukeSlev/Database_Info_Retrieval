@@ -33,15 +33,15 @@ def parseQuery(query):
         for m in it:
         		exp=query[m.start():m.end()]
         		if re.match(yearQuery,exp):
-					parseYear(exp)
+					parseYearSearch(exp)
 					return
 					
 				if re.match(termQuery,exp):
-					parseQuery(exp)
+					parseQuerySearch(exp)
 					return
 					
 				if re.match(termQuery,exp):
-					parsePhrase(exp)
+					parsePhraseSearch(exp)
 					return
       
             
@@ -50,17 +50,14 @@ def parseQuery(query):
 
 	
 	
-def parseYear(exp):
+def parseYearSearch(exp):
 	pass
 
-def parseQuery(exp):
+def parseQuerySearch(exp):
 	pass
 
-def parsePhrase(exp):
+def parsePhraseSearch(exp):
 	pass
-
-def yearsInRange(starting_year, ending_year):
-    return yearinBetween.yearSearch(starting_year, ending_year)
 
 def yearsGreater(starting_year):
     return yearGreater.yearSearch(starting_year)
