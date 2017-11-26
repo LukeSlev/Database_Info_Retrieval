@@ -1,26 +1,21 @@
-import bsddb3,sys,re
+import bsddb3, sys, re
+import termSearch
 
 def parseQuery(query):
     if re.search("^[a]$",query):
         print("here")
 
-def yearGreaterThan(year):
-    pass
-
-def yearLessThan(year):
-    pass
-
-def yearEqualTo(year):
+def yearsInRange():
     pass
 
 def titeEqualTo(title):
-    pass
+    return termSearch('t-' + title)
 
 def authorEqualTo(author):
-    pass
+    return termSearch('a-' + title)
 
 def otherEqualTo(other):
-    pass
+    return termSearch('o-' + title)
 
 def joinQueries():
     pass
