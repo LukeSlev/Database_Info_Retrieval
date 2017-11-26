@@ -139,7 +139,7 @@ def phraseEqualTo(typ, substring):
     checkPhraseOrder(substring)
 
 def checkPhraseOrder(substring):
-    
+    pass
 
 
 def phraseTitleEqualTo(title):
