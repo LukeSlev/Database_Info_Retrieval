@@ -1,5 +1,5 @@
 from bsddb3 import db
-
+# import the final year and the start year from the queries.py file and pass it to the function
 DB_File = input('What is the name of the file that includes your indexed year file? ')
 #DB_File = "ye.idx"
 database = db.DB()
