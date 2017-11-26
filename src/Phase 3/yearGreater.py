@@ -25,7 +25,8 @@ def yearSearch(Starting_Year):
     print("LUKE: ",result)
     if(result != None):
         while(result != None):
-            middleSet.add(result[1])
+            #print(result[1].decode('utf-8'))
+            middleSet.add(result[1].decode('utf-8'))
             result = curs.next()
     else:
         print("No result was found")

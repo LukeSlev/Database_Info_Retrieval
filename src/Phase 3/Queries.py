@@ -3,6 +3,8 @@ import termSearch
 import yearGreater, yearLess
 
 returnSet = set()
+SHORT, FULL = range(2)
+displayMode = FULL
 
 def parseQuery(query):
     numeric="[0-9]"
@@ -37,6 +39,9 @@ def parseQuery(query):
 
             if (exp=="author" or exp=="title" or exp=="other") and m.end()<len(query)-1 and query[m.end()]==":":
                 continue
+
+            if exp == "output":
+                pass  #TODO: SET THE OUTPUT MODE HERE TYMOORE
 
             if re.match(yearQuery,exp):
                 parseYearSearch(exp)
@@ -114,6 +119,10 @@ def otherEqualTo(other):
 
 def namelessEqualTo(nameless):
    print("nameless: ",nameless)
+   joinQueries(termSearch.termSearch('t-' + other))
+   joinQueries(termSearch.termSearch('a-' + other))
+   joinQueries(termSearch.termSearch('o-' + other))
+
 
 
 def phraseEqualTo(typ, substring):
@@ -127,6 +136,10 @@ def phraseEqualTo(typ, substring):
    elif typ == "other":
        for word in subList:
            joinQueries(otherEqualTo(word))
+    checkPhraseOrder(substring)
+
+def checkPhraseOrder(substring):
+    
 
 
 def phraseTitleEqualTo(title):
@@ -152,10 +165,30 @@ def joinQueries(resultToAdd):
     else:
         returnSet.intersection(resultToAdd)
 
+def displayResults():
+    global returnSet
+    global displayMode
+    DB_File = "re.idx"
+    database = bsddb3.db.DB()
+    database.set_flags(bsddb3.db.DB_DUP) #declare duplicates allowed before you create the database
+    database.open(DB_File,None, bsddb3.db.DB_HASH, bsddb3.db.DB_CREATE)
+    curs = database.cursor()
+
+    for r in returnSet:
+        result = curs.set(r.encode('utf-8'))
+        if displayMode is FULL:
+            print(str(result[1].decode('utf-8')))
+        else:
+            print(str(result[0].decode('utf-8')))
+
+    curs.close()
+    database.close()
+
 
 def main():
     for line in sys.stdin:
         parseQuery(line)
+        displayResults()
 
 if __name__ == '__main__':
     main()
