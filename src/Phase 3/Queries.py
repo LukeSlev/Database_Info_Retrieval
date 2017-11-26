@@ -135,10 +135,34 @@ def phraseEqualTo(typ, substring):
     elif typ == "other":
         for word in subList:
             joinQueries(otherEqualTo(word))
-    checkPhraseOrder(substring)
+    checkPhraseOrder(typ, substring)
 
-def checkPhraseOrder(substring):
-    pass
+def checkPhraseOrder(typ, substring):
+    global returnSet
+    global displayMode
+    DB_File = "re.idx"
+    database = bsddb3.db.DB()
+    database.set_flags(bsddb3.db.DB_DUP) #declare duplicates allowed before you create the database
+    database.open(DB_File, None, bsddb3.db.DB_HASH, bsddb3.db.DB_CREATE)
+    curs = database.cursor()
+
+    for r in returnSet:
+        result = curs.set(r.encode('utf-8'))
+        xmlRecord = result[1].decode('utf-8')
+        xmlReg = "(<{}>)([a-zA-Z0-9_ ]+)(</{}>)".format(typ,typ)  # Looks for the records
+        check = re.findall(xmlReg, xmlRecord)[1]
+
+        if (substring not in check):
+            print(check, subtring)
+            returnSet.remove(r)
+        else:
+            print("not in")
+
+    curs.close()
+    database.close()
+
+
+
 
 
 def phraseTitleEqualTo(title):
@@ -162,7 +186,7 @@ def joinQueries(resultToAdd):
     if len(returnSet) == 0:
         returnSet = resultToAdd
     else:
-        returnSet.intersection(resultToAdd)
+        returnSet = returnSet.intersection(resultToAdd)
 
 def displayResults():
     global returnSet
@@ -184,13 +208,21 @@ def displayResults():
     curs.close()
     database.close()
 
+def resetResults():
+    global returnSet
+    global displayMode
+    returnSet=set()
+    displayMode = SHORT
+
 
 def main():
     global returnSet
     for line in sys.stdin:
         parseQuery(line)
         displayResults()
-        returnSet=set()
+        resetResults()
+
+
 
 if __name__ == '__main__':
     main()
