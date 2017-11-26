@@ -7,8 +7,21 @@ def yearSearch(Starting_Year):
     database.open(DB_File,None, db.DB_BTREE, db.DB_CREATE)
     curs = database.cursor()
 
+    # while Starting_Year[0] == '0':
+    #     Starting_Year = Starting_Year[1:]
+    #     print('here', Starting_Year)
+
     middleSet = set()
-    result = curs.set(str(int(Starting_Year)+1).encode("utf-8"))
+
+    print(str(int(Starting_Year)+1))
+
+    if (int(Starting_Year) < int(curs.first()[0].decode("utf-8"))): # too early
+        result = curs.set_range(curs.first()[0])
+    elif int(Starting_Year) < int(curs.last()[0].decode("utf-8")):  # Proper Range
+        result = curs.set_range(str(int(Starting_Year)+1).encode("utf-8"))
+    else:
+        result = None  # too late
+
     print("LUKE: ",result)
     if(result != None):
         while(result != None):
@@ -21,6 +34,7 @@ def yearSearch(Starting_Year):
     curs.close()
     database.close()
     return middleSet
+
 
 def main():
     print(yearSearch(2018))

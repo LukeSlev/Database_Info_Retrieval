@@ -64,27 +64,32 @@ def parseQuery(query):
 
 
 def parseYearSearch(exp):
-   for m in re.finditer("<", exp):
-      print(yearsLess(exp[m.start()+1:]))
-      return
-   for m in re.finditer(">", exp):
-      print(yearsGreater(exp[m.start()+1:]))
-      return
+    global returnSet
+    for m in re.finditer("<", exp):
+        ret = yearsLess(exp[m.start()+1:])
+        print(ret)
+        joinQueries(ret)
+        return
+    for m in re.finditer(">", exp):
+        ret = yearsGreater(exp[m.start()+1:])
+        print(ret)
+        joinQueries(ret)
+        return
 
 def parseTermSearch(exp):
-   for m in re.finditer("title:", exp):
-      titleEqualTo(exp[m.start()+6:])
-      return
+    for m in re.finditer("title:", exp):
+        joinQueries(titleEqualTo(exp[m.start()+6:]))
+        return
 
-   for m in re.finditer("author:", exp):
-      authorEqualTo(exp[m.start()+7:])
-      return
+    for m in re.finditer("author:", exp):
+        joinQueries(authorEqualTo(exp[m.start()+7:]))
+        return
 
-   for m in re.finditer("other:", exp):
-      otherEqualTo(exp[m.start()+6:])
-      return
+    for m in re.finditer("other:", exp):
+        joinQueries(otherEqualTo(exp[m.start()+6:]))
+        return
 
-   namelessEqualTo(exp)
+    namelessEqualTo(exp)
 
 def yearsGreater(starting_year):
     print("years greater: ",starting_year)
@@ -106,47 +111,46 @@ def otherEqualTo(other):
     print("other: ",other)
     return termSearch.termSearch('o-' + other)
 
-def substringEqualTo(typ, substring):
-    global returnSet
-    subList = substring.split()
-    if typ == "author":
-        for word in subList:
-            if len(returnSet) == 0:
-                returnSet.add(authorEqualTo(word))
-            else:
-                returnSet.intersection(authorEqualTo(word))
-    elif typ == "title":
-        for word in subList:
-            if len(returnSet) == 0:
-                returnSet.add(titleEqualTo(word))
-            else:
-                returnSet.intersection(titleEqualTo(word))
-    elif typ == "other":
-        for word in subList:
-            if len(returnSet) == 0:
-                returnSet.add(otherEqualTo(word))
-            else:
-                returnSet.intersection(otherEqualTo(word))
 
 def namelessEqualTo(nameless):
    print("nameless: ",nameless)
 
 
+def phraseEqualTo(typ, substring):
+   subList = substring.split()
+   if typ == "author":
+       for word in subList:
+           joinQueries(authorEqualTo(word))
+   elif typ == "title":
+       for word in subList:
+           joinQueries(titleEqualTo(word))
+   elif typ == "other":
+       for word in subList:
+           joinQueries(otherEqualTo(word))
+
+
 def phraseTitleEqualTo(title):
    print("ptitle: ",title)
+   phraseEqualTo('title',title)
 
 def phraseAuthorEqualTo(author):
-	print("pauther: ",author)
+    print("pauther: ",author)
+    phraseEqualTo('author',author)
 
 def phraseOtherEqualTo(other):
-	print("pother: ",other)
+    print("pother: ",other)
+    phraseEqualTo('other',other)
 
 def phraseNamelessEqualTo(nameless):
-	print("pnameless: ",nameless)
+    print("pnameless: ",nameless)
+    phraseEqualTo('nameless',nameless)
 
-
-def joinQueries():
-    pass
+def joinQueries(resultToAdd):
+    global returnSet
+    if len(returnSet) == 0:
+        returnSet = resultToAdd
+    else:
+        returnSet.intersection(resultToAdd)
 
 
 def main():
