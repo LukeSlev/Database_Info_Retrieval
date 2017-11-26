@@ -7,6 +7,7 @@ SHORT, FULL = range(2)
 displayMode = SHORT
 
 def parseQuery(query):
+    global displayMode
     numeric="[0-9]"
     alphanumeric="[0-9a-zA-Z]"
 
@@ -24,11 +25,6 @@ def parseQuery(query):
     expression="({}|{}|{})".format(yearQuery,termQuery,phraseQuery)
     querySearch="^{}(\\s{})*$".format(expression,expression)
 
-
-    # y=re.compile(yearQuery)
-    # t=re.compile(termQuery)
-    # p=re.compile(phraseQuery)
-    #
 
     if re.match(querySearch,query):
         print("\ncorrect query\n")
@@ -75,12 +71,12 @@ def parseYearSearch(exp):
     global returnSet
     for m in re.finditer("<", exp):
         ret = yearsLess(exp[m.start()+1:])
-        print(ret)
+        #print(ret)
         joinQueries(ret)
         return
     for m in re.finditer(">", exp):
         ret = yearsGreater(exp[m.start()+1:])
-        print(ret)
+        #print(ret)
         joinQueries(ret)
         return
 
@@ -122,11 +118,11 @@ def otherEqualTo(other):
 
 def namelessEqualTo(nameless):
    print("nameless: ",nameless)
-   joinQueries(termSearch.termSearch('t-' + nameless))
-   joinQueries(termSearch.termSearch('a-' + nameless))
-   joinQueries(termSearch.termSearch('o-' + nameless))
-
-
+   r1=termSearch.termSearch('t-' + nameless)
+   r2=termSearch.termSearch('a-' + nameless)
+   r3=termSearch.termSearch('o-' + nameless)
+   total=r1.union(r2).union(r3)
+   joinQueries(total)
 
 def phraseEqualTo(typ, substring):
     subList = substring.split()
@@ -179,8 +175,9 @@ def displayResults():
 
     for r in returnSet:
         result = curs.set(r.encode('utf-8'))
-        if displayMode is FULL:
+        if displayMode == FULL:
             print(str(result[1].decode('utf-8')))
+
         else:
             print(str(result[0].decode('utf-8')))
 
@@ -189,10 +186,11 @@ def displayResults():
 
 
 def main():
+    global returnSet
     for line in sys.stdin:
         parseQuery(line)
         displayResults()
-        resultSet = set()
+        returnSet=set()
 
 if __name__ == '__main__':
     main()
