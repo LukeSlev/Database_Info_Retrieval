@@ -1,6 +1,7 @@
 from bsddb3 import db
 
 def yearSearch(Starting_Year):
+    Starting_Year=int(Starting_Year)-1
     DB_File = "ye.idx"
     database = db.DB()
     database.set_flags(db.DB_DUP) #declare duplicates allowed before you create the database
@@ -16,7 +17,7 @@ def yearSearch(Starting_Year):
         if int(curs.next()[0].decode("utf-8"))>= int(Starting_Year+1):
              return middleSet
     else:
-        result = None 
+        result = None
 
     if(result != None):
         while(result != None):
