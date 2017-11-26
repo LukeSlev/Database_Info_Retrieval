@@ -117,11 +117,11 @@ def otherEqualTo(other):
 
 def namelessEqualTo(nameless):
    print("nameless: ",nameless)
-   joinQueries(termSearch.termSearch('t-' + other))
-   joinQueries(termSearch.termSearch('a-' + other))
-   joinQueries(termSearch.termSearch('o-' + other))
-
-
+   r1=termSearch.termSearch('t-' + nameless)
+   r2=termSearch.termSearch('a-' + nameless)
+   r3=termSearch.termSearch('o-' + nameless)
+   total=r1.union(r2).union(r3)
+   joinQueries(total)
 
 def phraseEqualTo(typ, substring):
     subList = substring.split()
@@ -184,9 +184,11 @@ def displayResults():
 
 
 def main():
+    global returnSet
     for line in sys.stdin:
         parseQuery(line)
         displayResults()
+        returnSet=set()
 
 if __name__ == '__main__':
     main()
