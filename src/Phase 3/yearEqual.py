@@ -1,11 +1,6 @@
 from bsddb3 import db
 
-<<<<<<< HEAD
-def yearSearch(Starting_Year):
-    Starting_Year=int(Starting_Year)-1
-=======
 def yearSearch(year):
->>>>>>> 0a844b256cad07faf31b6254283416e3444a280f
     DB_File = "ye.idx"
     database = db.DB()
     database.set_flags(db.DB_DUP) #declare duplicates allowed before you create the database
@@ -15,22 +10,9 @@ def yearSearch(year):
     Ending_Year = int(year) + 1
       
     middleSet = set()
-<<<<<<< HEAD
-
-    #print(str(int(Starting_Year)))
-
-    if int(Starting_Year) < int(curs.last()[0].decode("utf-8")):  # Proper Range
-        result = curs.set_range(str(int(Starting_Year)+1).encode("utf-8"))
-        if int(curs.next()[0].decode("utf-8"))>= int(Starting_Year+1):
-             return middleSet
-    else:
-        result = None
-
-=======
     #get the record that has the smallest key greater than or equal to the Starting Name:
     result = curs.set_range(str(Starting_Year).encode("utf-8")) 
    
->>>>>>> 0a844b256cad07faf31b6254283416e3444a280f
     if(result != None):
   
         while(result != None):
