@@ -11,7 +11,7 @@ def yearSearch(Starting_Year):
     result = curs.set_range(str(Starting_Year).encode("utf-8"))
     if(result != None):
         while(result != None):
-            middleSet.add(str(result[1].decode("utf-8")))
+            middleSet.add(result[1])
             result = curs.next()
     else:
         print("No result was found")
