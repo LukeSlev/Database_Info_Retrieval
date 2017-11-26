@@ -4,7 +4,7 @@ import yearGreater, yearLess
 
 returnSet = set()
 SHORT, FULL = range(2)
-displayMode = FULL
+displayMode = SHORT
 
 def parseQuery(query):
     numeric="[0-9]"
@@ -40,9 +40,6 @@ def parseQuery(query):
             if (exp=="author" or exp=="title" or exp=="other") and m.end()<len(query)-1 and query[m.end()]==":":
                 continue
 
-            if exp == "output":
-                pass  #TODO: SET THE OUTPUT MODE HERE TYMOORE
-
             if re.match(yearQuery,exp):
                 parseYearSearch(exp)
                 continue
@@ -62,6 +59,12 @@ def parseQuery(query):
                 else:
                 	phraseNamelessEqualTo(exp[1:-1])
                 continue
+
+    elif re.match("output=key",query):
+        displayMode=SHORT
+
+    elif re.match("output=full",query):
+        displayMode=FULL
 
     else:
         print("\nincorrect query\n")
@@ -126,20 +129,20 @@ def namelessEqualTo(nameless):
 
 
 def phraseEqualTo(typ, substring):
-   subList = substring.split()
-   if typ == "author":
-       for word in subList:
-           joinQueries(authorEqualTo(word))
-   elif typ == "title":
-       for word in subList:
-           joinQueries(titleEqualTo(word))
-   elif typ == "other":
-       for word in subList:
-           joinQueries(otherEqualTo(word))
+    subList = substring.split()
+    if typ == "author":
+        for word in subList:
+            joinQueries(authorEqualTo(word))
+    elif typ == "title":
+        for word in subList:
+            joinQueries(titleEqualTo(word))
+    elif typ == "other":
+        for word in subList:
+            joinQueries(otherEqualTo(word))
     checkPhraseOrder(substring)
 
 def checkPhraseOrder(substring):
-    
+    pass
 
 
 def phraseTitleEqualTo(title):
