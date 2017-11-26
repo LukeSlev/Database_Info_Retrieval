@@ -37,8 +37,8 @@ def parseQuery(query):
         for m in it:
             exp=query[m.start():m.end()]
 
-            if(exp=="author" or exp=="title" or exp=="other"):
-            	continue
+            if (exp=="author" or exp=="title" or exp=="other") and m.end()<len(query)-1 and query[m.end()]==":":
+                continue
 
             if exp == "output":
                 pass  #TODO: SET THE OUTPUT MODE HERE TYMOORE
