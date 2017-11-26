@@ -25,11 +25,6 @@ def parseQuery(query):
     querySearch="^{}(\\s{})*$".format(expression,expression)
 
 
-    # y=re.compile(yearQuery)
-    # t=re.compile(termQuery)
-    # p=re.compile(phraseQuery)
-    #
-
     if re.match(querySearch,query):
         print("\ncorrect query\n")
 
