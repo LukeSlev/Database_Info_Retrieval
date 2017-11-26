@@ -1,6 +1,6 @@
 import bsddb3, sys, re
 import termSearch
-import yearInBetween, yearGreater, yearLess
+import yearGreater, yearLess
 
 returnSet = set()
 
@@ -45,7 +45,7 @@ def parseQuery(query):
             if re.match(termQuery,exp):
                 parseTermSearch(exp)
                 continue
-					
+
             if re.match(phraseQuery,exp):
                 if m.start()!=0 and query[m.start()-1]==":":
                     if query[m.start()-2]=="e":
@@ -87,21 +87,25 @@ def parseTermSearch(exp):
    namelessEqualTo(exp)
 
 def yearsGreater(starting_year):
+    print("years greater: ",starting_year)
     return yearGreater.yearSearch(starting_year)
 
 def yearsLess(ending_year):
+    print("years less: ",ending_year)
     return yearLess.yearSearch(ending_year)
 
 def titleEqualTo(title):
+    print("title: ",title)
     return termSearch.termSearch('t-' + title)
 
 def authorEqualTo(author):
+    print("author: ",author)
     return termSearch.termSearch('a-' + author)
 
 def otherEqualTo(other):
+    print("other: ",other)
     return termSearch.termSearch('o-' + other)
 
-<<<<<<< HEAD
 def substringEqualTo(typ, substring):
     global returnSet
     subList = substring.split()
@@ -123,25 +127,23 @@ def substringEqualTo(typ, substring):
                 returnSet.add(otherEqualTo(word))
             else:
                 returnSet.intersection(otherEqualTo(word))
-=======
+
 def namelessEqualTo(nameless):
-	print(nameless)
+   print("nameless: ",nameless)
 
 
 def phraseTitleEqualTo(title):
-	print(title)
+   print("ptitle: ",title)
 
 def phraseAuthorEqualTo(author):
-	print(author)
+	print("pauther: ",author)
 
 def phraseOtherEqualTo(other):
-	print(other)
+	print("pother: ",other)
 
 def phraseNamelessEqualTo(nameless):
-	print(nameless)
+	print("pnameless: ",nameless)
 
-
->>>>>>> 530aa08c128870c9617a801da4454fefbff6beb6
 
 def joinQueries():
     pass

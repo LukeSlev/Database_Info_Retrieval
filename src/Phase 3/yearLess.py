@@ -12,16 +12,13 @@ def yearSearch(Ending_Year):
 
     middleSet = set()
     result = curs.first()
-    print('result', result)
-
 
     if(result != None):
           while(result != None):
-            if(int(result[0].decode("utf-8")[0:])>=(Ending_Year)):
+            if(int(result[0].decode("utf-8")[0:])>=int((Ending_Year))):
                 break
 
             middleSet.add(result[1])
-            print("Name: " + str(result[0].decode("utf-8")) + ", Rest: " + str(result[1].decode("utf-8")))
             result = curs.next()
 
     else:
@@ -30,7 +27,7 @@ def yearSearch(Ending_Year):
 
     curs.close()
     database.close()
-    #return middleSet
+    return middleSet
 
 def main():
     print(yearSearch(20))    
