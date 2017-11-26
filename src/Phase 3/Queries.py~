@@ -74,19 +74,6 @@ def authorEqualTo(author):
 def otherEqualTo(other):
     return termSearch.termSearch('o-' + title)
 
-def substringEqualTo(typ, substring):
-    ret = set()
-    subList = substring.split()
-    if typ == "author":
-        for word in subList:
-            authorEqualTo(word)
-    elif typ == "title":
-        for word in subList:
-            titleEqualTo(word)
-    else:
-        for word in subList:
-            otherEqualTo(word)
-
 def joinQueries():
     pass
 
