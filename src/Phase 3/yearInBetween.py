@@ -27,9 +27,13 @@ def yearSearch(Starting_Year,Ending_Year):
         print("No result was found")
         return ()
 
+    curs.close()
+    database.close()
     return middleSet
 
+def main():
+    print(yearSearch(1994,1995))
 
-print(yearSearch(1994,1995))
-curs.close()
-database.close()
+
+if __name__ == "__main__":
+    main()
