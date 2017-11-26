@@ -20,6 +20,7 @@ def yearSearch(Ending_Year):
                 break
 
             middleSet.add(str(result[1].decode("utf-8")))
+            result = curs.next()
 
     else:
         print("No result was found")
