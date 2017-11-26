@@ -27,7 +27,7 @@ def yearSearch(Ending_Year):
 
     curs.close()
     database.close()
-    return middleSet
+    #return middleSet
 
 def main():
     print(yearSearch(20))    

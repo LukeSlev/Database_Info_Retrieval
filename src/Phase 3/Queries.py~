@@ -1,6 +1,6 @@
 import bsddb3, sys, re
 import termSearch
-import yearInBetween, yearGreater, yearLess
+import yearGreater, yearLess
 
 def parseQuery(query):
     numeric="[0-9]"
