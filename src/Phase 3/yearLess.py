@@ -20,8 +20,7 @@ def yearSearch(Ending_Year):
                 break
 
             middleSet.add(str(result[1].decode("utf-8")))
-            print("Name: " + str(result[0].decode("utf-8")) + ", Rest: " + str(result[1].decode("utf-8")))
-            result = curs.next()
+
     else:
         print("No result was found")
         return ()
