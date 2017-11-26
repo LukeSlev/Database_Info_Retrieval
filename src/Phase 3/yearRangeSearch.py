@@ -1,7 +1,6 @@
 from bsddb3 import db
-# import the final year and the start year from the queries.py file and pass it to the function
-DB_File = input('What is the name of the file that includes your indexed year file? ')
-#DB_File = "ye.idx"
+
+DB_File = "ye.idx"
 database = db.DB()
 database.set_flags(db.DB_DUP) #declare duplicates allowed before you create the database
 database.open(DB_File,None, db.DB_BTREE, db.DB_CREATE)
@@ -11,7 +10,7 @@ while(True):
     
     Starting_Year = input("Enter the Starting_Year: ")
     Ending_Year = input("Enter the Ending_Year: ")
-    
+    middleSet = set()
     #get the record that has the smallest key greater than or equal to the Starting Name:
     result = curs.set_range(Starting_Year.encode("utf-8")) 
    
@@ -24,13 +23,14 @@ while(True):
                 break
             
             print("Year: " + str(result[0].decode("utf-8")) + ", Rest: " + str(result[1].decode("utf-8")))
-            result = curs.next() y
+            middleSet.add(str(result[1].decode("utf-8")))
+
+	
+            result = curs.next() 
     else:
         print("No result was found")
             
-    NewSearch = input("Do you want to start a new search?(press y for yes) ")
-    if(NewSearch != "y"): #Termination Condition
-        break
+    print(middleSet)
 
 curs.close()
 database.close()
