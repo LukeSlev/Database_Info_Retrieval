@@ -122,9 +122,9 @@ def otherEqualTo(other):
 
 def namelessEqualTo(nameless):
    print("nameless: ",nameless)
-   joinQueries(termSearch.termSearch('t-' + other))
-   joinQueries(termSearch.termSearch('a-' + other))
-   joinQueries(termSearch.termSearch('o-' + other))
+   joinQueries(termSearch.termSearch('t-' + nameless))
+   joinQueries(termSearch.termSearch('a-' + nameless))
+   joinQueries(termSearch.termSearch('o-' + nameless))
 
 
 
@@ -192,6 +192,7 @@ def main():
     for line in sys.stdin:
         parseQuery(line)
         displayResults()
+        resultSet = set()
 
 if __name__ == '__main__':
     main()
