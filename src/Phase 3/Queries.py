@@ -2,6 +2,8 @@ import bsddb3, sys, re
 import termSearch
 import yearInBetween, yearGreater, yearLess
 
+returnSet = set()
+
 def parseQuery(query):
     numeric="[0-9]"
     alphanumeric="[0-9a-zA-Z]"
@@ -28,29 +30,29 @@ def parseQuery(query):
 
     if re.match(querySearch,query):
         print("\ncorrect query\n")
-        
+
         it = re.finditer(expression, query)
         for m in it:
             exp=query[m.start():m.end()]
-        
+
             if re.match(yearQuery,exp):
                 parseYearSearch(exp)
                 return
-					
+
             if re.match(termQuery,exp):
                 parseQuerySearch(exp)
                 return
-					
+
             if re.match(termQuery,exp):
                 parsePhraseSearch(exp)
                 return
-      
-            
+
+
     else:
         print("\nincorrect query\n")
 
-	
-	
+
+
 def parseYearSearch(exp):
 	for m in re.finditer("<", exp):
 		yearsLess(exp[m.start()+1:])
@@ -71,23 +73,32 @@ def titeEqualTo(title):
     return termSearch.termSearch('t-' + title)
 
 def authorEqualTo(author):
-    return termSearch.termSearch('a-' + title)
+    return termSearch.termSearch('a-' + author)
 
 def otherEqualTo(other):
-    return termSearch.termSearch('o-' + title)
+    return termSearch.termSearch('o-' + other)
 
 def substringEqualTo(typ, substring):
-    ret = set()
+    global returnSet
     subList = substring.split()
     if typ == "author":
         for word in subList:
-            authorEqualTo(word)
+            if len(returnSet) == 0:
+                returnSet.add(authorEqualTo(word))
+            else:
+                returnSet.intersection(authorEqualTo(word))
     elif typ == "title":
         for word in subList:
-            titleEqualTo(word)
-    else:
+            if len(returnSet) == 0:
+                returnSet.add(titleEqualTo(word))
+            else:
+                returnSet.intersection(titleEqualTo(word))
+    elif typ == "other":
         for word in subList:
-            otherEqualTo(word)
+            if len(returnSet) == 0:
+                returnSet.add(otherEqualTo(word))
+            else:
+                returnSet.intersection(otherEqualTo(word))
 
 def joinQueries():
     pass

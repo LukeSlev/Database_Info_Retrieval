@@ -13,14 +13,14 @@ def termSearch(searchTerm):
 
     if(result != None):
         #print(str(result[0].decode("utf-8")),str(result[1].decode("utf-8")))
-        resultSet.add(result)
+        resultSet.add(result[1])
 
 
         #iterating through duplicates:
         dup = curs.next_dup()
         while(dup != None):
             #print(str(dup[0].decode("utf-8")),str(dup[1].decode("utf-8")))
-            resultSet.add(dup)
+            resultSet.add(dup[1])
             dup = curs.next_dup()
     else:
         print("No Entry Found.")
