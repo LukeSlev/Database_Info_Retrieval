@@ -1,24 +1,25 @@
-import bsddb3
+import bsddb3,sys,re
 
 def parseQuery(query):
+    if re.search("^[a]$",query):
+        print("here")
+
+def yearGreaterThan(year):
     pass
 
-def yearGreaterThan():
+def yearLessThan(year):
     pass
 
-def yearLessThan():
+def yearEqualTo(year):
     pass
 
-def yearEqualTo():
+def titeEqualTo(title):
     pass
 
-def titeEqualTo():
+def authorEqualTo(author):
     pass
 
-def authorEqualTo():
-    pass
-
-def otherEqualTo():
+def otherEqualTo(other):
     pass
 
 def joinQueries():
@@ -26,7 +27,8 @@ def joinQueries():
 
 
 def main():
-    pass
+    for line in sys.stdin:
+        parseQuery(line)
 
 if __name__ == '__main__':
     main()
