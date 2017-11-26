@@ -1,6 +1,6 @@
 import bsddb3, sys, re
 import termSearch
-import yearGreater, yearLess
+import yearGreater, yearLess, yearEqual
 
 returnSet = set()
 SHORT, FULL = range(2)
@@ -80,6 +80,12 @@ def parseYearSearch(exp):
         joinQueries(ret)
         return
 
+    for m in re.finditer(":", exp):
+        ret = yearsEqualTo(exp[m.start()+1:])
+        #print(ret)
+        joinQueries(ret)
+        return
+
 def parseTermSearch(exp):
     for m in re.finditer("title:", exp):
         joinQueries(titleEqualTo(exp[m.start()+6:]))
@@ -102,6 +108,10 @@ def yearsGreater(starting_year):
 def yearsLess(ending_year):
     print("years less: ",ending_year)
     return yearLess.yearSearch(ending_year)
+
+def yearsEqualTo(year):
+    print("year equal to: ",year)
+    return yearEqual.yearSearch(year)
 
 def titleEqualTo(title):
     print("title: ",title)
@@ -218,7 +228,7 @@ def resetResults():
 def main():
     global returnSet
     for line in sys.stdin:
-        parseQuery(line)
+        parseQuery(line.lower())
         displayResults()
         resetResults()
 
