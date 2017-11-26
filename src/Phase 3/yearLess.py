@@ -17,7 +17,7 @@ def yearSearch(Ending_Year):
 
     if(result != None):
           while(result != None):
-            if(int(result[0].decode("utf-8")[0:4])>=(Ending_Year)):
+            if(int(result[0].decode("utf-8")[0:])>=(Ending_Year)):
                 break
 
             middleSet.add(result[1])
