@@ -31,18 +31,19 @@ def parseQuery(query):
         
         it = re.finditer(expression, query)
         for m in it:
-        		exp=query[m.start():m.end()]
-        		if re.match(yearQuery,exp):
-					parseYearSearch(exp)
-					return
+            exp=query[m.start():m.end()]
+        
+            if re.match(yearQuery,exp):
+                parseYearSearch(exp)
+                return
 					
-				if re.match(termQuery,exp):
-					parseQuerySearch(exp)
-					return
+            if re.match(termQuery,exp):
+                parseQuerySearch(exp)
+                return
 					
-				if re.match(termQuery,exp):
-					parsePhraseSearch(exp)
-					return
+            if re.match(termQuery,exp):
+                parsePhraseSearch(exp)
+                return
       
             
     else:
@@ -51,7 +52,8 @@ def parseQuery(query):
 	
 	
 def parseYearSearch(exp):
-	pass
+	for m in re.finditer("<", exp):
+		print(exp[m.start()+1:])
 
 def parseQuerySearch(exp):
 	pass
