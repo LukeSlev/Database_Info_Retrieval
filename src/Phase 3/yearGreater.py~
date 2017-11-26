@@ -8,7 +8,7 @@ def yearSearch(Starting_Year):
     curs = database.cursor()
 
     middleSet = set()
-    result = curs.set(str(int(Starting_Year)+1).encode("utf-8"))
+    result = curs.set_range(str(int(Starting_Year)+1).encode("utf-8"))
     print("LUKE: ",result)
     if(result != None):
         while(result != None):
