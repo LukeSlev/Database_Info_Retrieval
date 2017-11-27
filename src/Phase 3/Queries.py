@@ -160,13 +160,15 @@ def checkPhraseOrder(typ, substring):
         result = curs.set(r.encode('utf-8'))
         xmlRecord = result[1].decode('utf-8')
         xmlReg = "(<{}>)([a-zA-Z0-9_ ]+)(</{}>)".format(typ,typ)  # Looks for the records
-        check = re.findall(xmlReg, xmlRecord)[1]
+        for m in re.finiter(xmlReg, xmlRecord):
+            print(xmlRecord[m.start():m.end()])
 
-        if (substring not in check):
-            print(check, subtring)
-            returnSet.remove(r)
-        else:
-            print("not in")
+
+        # if (substring not in check):
+        #     print(check, subtring)
+        #     returnSet.remove(r)
+        # else:
+        #     print("not in")
 
     curs.close()
     database.close()
