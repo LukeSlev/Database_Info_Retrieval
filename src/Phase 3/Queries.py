@@ -134,19 +134,6 @@ def namelessEqualTo(nameless):
    total=r1.union(r2).union(r3)
    joinQueries(total)
 
-def phraseEqualTo(typ, substring):
-    subList = substring.split()
-    if typ == "author":
-        for word in subList:
-            joinQueries(authorEqualTo(word))
-    elif typ == "title":
-        for word in subList:
-            joinQueries(titleEqualTo(word))
-    elif typ == "other":
-        for word in subList:
-            joinQueries(otherEqualTo(word))
-    checkPhraseOrder(typ, substring)
-
 def checkPhraseOrder(typ, substring):
     global returnSet
     global displayMode
@@ -178,20 +165,36 @@ def checkPhraseOrder(typ, substring):
 
 
 def phraseTitleEqualTo(title):
-   print("ptitle: ",title)
-   phraseEqualTo('title',title)
+    print("ptitle: ",title)
+    subList = title.split()
+    for word in subList:
+        joinQueries(titleEqualTo(word))
+    checkPhraseOrder("title", title)
 
 def phraseAuthorEqualTo(author):
     print("pauther: ",author)
-    phraseEqualTo('author',author)
+    subList = author.split()
+    for word in subList:
+        joinQueries(authorEqualTo(word))
+    checkPhraseOrder("author", author)
 
 def phraseOtherEqualTo(other):
     print("pother: ",other)
-    phraseEqualTo('other',other)
+    subList = other.split()
+    for word in subList:
+        joinQueries(otherEqualTo(word))
+    checkPhraseOrder("other", other)
 
 def phraseNamelessEqualTo(nameless):
     print("pnameless: ",nameless)
-    phraseEqualTo('nameless',nameless)
+    subList = nameless.split()
+    for word in subList:
+        r1=titleEqualTo(word)
+        r2=authorEqualTo(word)
+        r3=otherEqualTo(word)
+        total=r1.union(r2).union(r3)
+        joinQueries(total)
+    checkPhraseOrder("nameless", nameless)
 
 def joinQueries(resultToAdd):
     global returnSet
