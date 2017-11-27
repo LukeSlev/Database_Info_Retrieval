@@ -5,11 +5,12 @@ import yearGreater, yearLess, yearEqual
 returnSet = set()
 SHORT, FULL = range(2)
 displayMode = SHORT
+count=0
 
 def parseQuery(query):
     global displayMode
     numeric="[0-9]"
-    alphanumeric="[0-9a-zA-Z]"
+    alphanumeric="[0-9a-zA-Z_]"
 
     term=alphanumeric + "+"
     termPrefix="(title|author|other):"
@@ -27,7 +28,7 @@ def parseQuery(query):
 
 
     if re.match(querySearch,query):
-        print("\ncorrect query\n")
+        print("\n\n")
 
         it = re.finditer(expression, query)
         for m in it:
@@ -58,9 +59,13 @@ def parseQuery(query):
 
     elif re.match("output=key",query):
         displayMode=SHORT
+        print()
+
 
     elif re.match("output=full",query):
         displayMode=FULL
+        print()
+
 
     else:
         print("\nincorrect query\n")
@@ -102,32 +107,32 @@ def parseTermSearch(exp):
     namelessEqualTo(exp)
 
 def yearsGreater(starting_year):
-    print("years greater: ",starting_year)
+    # print("years greater: ",starting_year)
     return yearGreater.yearSearch(starting_year)
 
 def yearsLess(ending_year):
-    print("years less: ",ending_year)
+    # print("years less: ",ending_year)
     return yearLess.yearSearch(ending_year)
 
 def yearsEqualTo(year):
-    print("year equal to: ",year)
+    # print("year equal to: ",year)
     return yearEqual.yearSearch(year)
 
 def titleEqualTo(title):
-    print("title: ",title)
+    # print("title: ",title)
     return termSearch.termSearch('t-' + title)
 
 def authorEqualTo(author):
-    print("author: ",author)
+    # print("author: ",author)
     return termSearch.termSearch('a-' + author)
 
 def otherEqualTo(other):
-    print("other: ",other)
+    # print("other: ",other)
     return termSearch.termSearch('o-' + other)
 
 
 def namelessEqualTo(nameless):
-   print("nameless: ",nameless)
+   # print("nameless: ",nameless)
    r1=termSearch.termSearch('t-' + nameless)
    r2=termSearch.termSearch('a-' + nameless)
    r3=termSearch.termSearch('o-' + nameless)
@@ -162,7 +167,6 @@ def checkPhraseOrder(typ, substring):
                 #print(substring, xmlRecord[m.start():m.end()])
                 toRemove.add(r)
             else:
-                print("not in")
                 toRemove = set()
                 break
 
@@ -177,43 +181,50 @@ def checkPhraseOrder(typ, substring):
 
 
 def phraseTitleEqualTo(title):
-    print("ptitle: ",title)
+    # print("ptitle: ",title)
     subList = title.split()
     for word in subList:
-        joinQueries(titleEqualTo(word))
+        if len(word) > 2:
+            joinQueries(titleEqualTo(word))
     checkPhraseOrder("title", title)
 
 def phraseAuthorEqualTo(author):
-    print("pauther: ",author)
+    # print("pauther: ",author)
     subList = author.split()
     for word in subList:
-        joinQueries(authorEqualTo(word))
+        if len(word) > 2:
+            joinQueries(authorEqualTo(word))
     checkPhraseOrder("author", author)
 
 def phraseOtherEqualTo(other):
-    print("pother: ",other)
+    # print("pother: ",other)
     subList = other.split()
     for word in subList:
-        joinQueries(otherEqualTo(word))
+        if len(word) > 2:
+            joinQueries(otherEqualTo(word))
     checkPhraseOrder("other", other)
 
 def phraseNamelessEqualTo(nameless):
-    print("pnameless: ",nameless)
+    # print("pnameless: ",nameless)
     subList = nameless.split()
     for word in subList:
-        r1=titleEqualTo(word)
-        r2=authorEqualTo(word)
-        r3=otherEqualTo(word)
-        total=r1.union(r2).union(r3)
-        joinQueries(total)
+        if len(word) > 2:
+            r1=titleEqualTo(word)
+            r2=authorEqualTo(word)
+            r3=otherEqualTo(word)
+            total=r1.union(r2).union(r3)
+            joinQueries(total)
     checkPhraseOrder("nameless", nameless)
+
 
 def joinQueries(resultToAdd):
     global returnSet
-    if len(returnSet) == 0:
+    global count
+    if count == 0:
         returnSet = resultToAdd
     else:
         returnSet = returnSet.intersection(resultToAdd)
+    count+=1
 
 def displayResults():
     global returnSet
@@ -224,30 +235,36 @@ def displayResults():
     database.open(DB_File,None, bsddb3.db.DB_HASH, bsddb3.db.DB_CREATE)
     curs = database.cursor()
 
+    if len(returnSet)==0:
+        print("No results found.")
+
     for r in returnSet:
         result = curs.set(r.encode('utf-8'))
         if displayMode == FULL:
             print(str(result[1].decode('utf-8')))
+            print()
 
         else:
             print(str(result[0].decode('utf-8')))
+
 
     curs.close()
     database.close()
 
 def resetResults():
     global returnSet
-    global displayMode
     returnSet=set()
-    displayMode = SHORT
 
 
 def main():
     global returnSet
+    global count
     for line in sys.stdin:
         parseQuery(line.lower())
         displayResults()
         resetResults()
+        print("\n\n")
+        count=0
 
 
 

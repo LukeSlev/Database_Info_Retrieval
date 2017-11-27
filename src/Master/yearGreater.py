@@ -29,7 +29,7 @@ def yearSearch(Starting_Year):
             middleSet.add(result[1].decode('utf-8'))
             result = curs.next()
     else:
-        print("No result was found")
+        # print("No result was found")
         return ()
 
     curs.close()

@@ -24,8 +24,11 @@ def yearSearch(year):
             middleSet.add(str(result[1].decode("utf-8")))
             result = curs.next()
     else:
-        print("No result was found")
+        # print("No result was found")
         return ()
+
+    # if len(middleSet)==0:
+    #     print("No result was found")
 
     return middleSet
 

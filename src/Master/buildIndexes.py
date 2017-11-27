@@ -8,7 +8,7 @@ def sortFiles():
     r = "recs.txt"
 
     call('sort -u -o {0} {1}'.format(t,t), shell=True)
-    call('sort -u -n -o {0} {1}'.format(y,y), shell=True)
+    call('sort -u -o {0} {1}'.format(y,y), shell=True)
     call('sort -u -o {0} {1}'.format(r,r), shell=True)
 
 def runPerl(inp, out):
@@ -45,7 +45,6 @@ def load_indexes():
     loadDB('btree', t, to)
     loadDB('btree', y, yo)
     loadDB('hash', r, ro)
-
 
 
 def create_indexes():
