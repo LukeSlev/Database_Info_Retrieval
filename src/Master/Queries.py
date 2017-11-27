@@ -166,7 +166,6 @@ def checkPhraseOrder(typ, substring):
                 #print(substring, xmlRecord[m.start():m.end()])
                 toRemove.add(r)
             else:
-                print("not in")
                 toRemove = set()
                 break
 
@@ -227,6 +226,9 @@ def displayResults():
     database.set_flags(bsddb3.db.DB_DUP) #declare duplicates allowed before you create the database
     database.open(DB_File,None, bsddb3.db.DB_HASH, bsddb3.db.DB_CREATE)
     curs = database.cursor()
+
+    if len(returnSet)==0:
+        print("No results found.")
 
     for r in returnSet:
         result = curs.set(r.encode('utf-8'))

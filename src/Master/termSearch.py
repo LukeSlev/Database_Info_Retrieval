@@ -24,8 +24,6 @@ def termSearch(searchTerm):
             #print(str(dup[0].decode("utf-8")),str(dup[1].decode("utf-8")))
             resultSet.add(dup[1].decode('utf-8'))
             dup = curs.next_dup()
-    else:
-        print("No Entry Found.")
 
 
     curs.close()
