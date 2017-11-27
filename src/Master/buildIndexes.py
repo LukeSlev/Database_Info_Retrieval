@@ -46,9 +46,6 @@ def load_indexes():
     loadDB('btree', y, yo)
     loadDB('hash', r, ro)
 
-def main():
-    sortFiles()
-
 
 
 def create_indexes():
