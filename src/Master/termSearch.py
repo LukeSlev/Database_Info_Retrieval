@@ -8,7 +8,7 @@ def termSearch(searchTerm):
     curs = database.cursor()
     resultSet = set()
 
-    print(searchTerm)
+    # print(searchTerm)
 
     result = curs.set(searchTerm.encode("utf-8"))
     #In the presence of duplicate key values, result will be set on the first data item for the given key.

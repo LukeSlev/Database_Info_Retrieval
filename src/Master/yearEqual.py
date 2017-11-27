@@ -27,6 +27,9 @@ def yearSearch(year):
         print("No result was found")
         return ()
 
+    if len(middleSet)==0:
+        print("No result was found")
+
     return middleSet
 
 
