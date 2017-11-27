@@ -5,6 +5,7 @@ import yearGreater, yearLess, yearEqual
 returnSet = set()
 SHORT, FULL = range(2)
 displayMode = SHORT
+count=0
 
 def parseQuery(query):
     global displayMode
@@ -215,12 +216,15 @@ def phraseNamelessEqualTo(nameless):
             joinQueries(total)
     checkPhraseOrder("nameless", nameless)
 
+
 def joinQueries(resultToAdd):
     global returnSet
-    if len(returnSet) == 0:
+    global count
+    if count == 0:
         returnSet = resultToAdd
     else:
         returnSet = returnSet.intersection(resultToAdd)
+    count+=1
 
 def displayResults():
     global returnSet
@@ -254,11 +258,13 @@ def resetResults():
 
 def main():
     global returnSet
+    global count
     for line in sys.stdin:
         parseQuery(line.lower())
         displayResults()
         resetResults()
         print("\n\n")
+        count=0
 
 
 

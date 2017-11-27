@@ -3265,7 +3265,6 @@
 2000:conf/cc/KnoopR00
 2000:conf/cl/ArenasBK00
 2000:conf/cl/BastidePTSL00
-2000:conf/cl/BonchiGP00
 2000:conf/cl/BroersenWM00
 2000:conf/cl/CelleB00
 2000:conf/cl/ChirkovaG00
