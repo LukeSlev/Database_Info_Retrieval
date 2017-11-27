@@ -9,7 +9,7 @@ displayMode = SHORT
 def parseQuery(query):
     global displayMode
     numeric="[0-9]"
-    alphanumeric="[0-9a-zA-Z]"
+    alphanumeric="[0-9a-zA-Z][0-9a-zA-Z][0-9a-zA-Z]"
 
     term=alphanumeric + "+"
     termPrefix="(title|author|other):"
