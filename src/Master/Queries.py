@@ -167,7 +167,7 @@ def checkPhraseOrder(typ, substring):
                 #print(substring, xmlRecord[m.start():m.end()])
                 toRemove.add(r)
             else:
-                toRemove = set()
+                toRemove.remove(r)
                 break
 
     for removes in toRemove:
